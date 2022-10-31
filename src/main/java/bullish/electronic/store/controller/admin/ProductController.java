@@ -4,6 +4,7 @@ import bullish.electronic.store.model.entity.Product;
 import bullish.electronic.store.model.entity.ProductPrice;
 import bullish.electronic.store.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("admin")
 @RequiredArgsConstructor
+@Log4j2
 public class ProductController {
     private final ProductService productService;
 

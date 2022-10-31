@@ -7,6 +7,7 @@
 ### Features
 * universal exception handling with spring aspects
 * unique exception for each exception cases (help quickly identify the issue without going deep into exception message)
+* AOP logging - we have aspect to log each controller method execution time (for example we can track with devops tools any call that take longer then 500ms)
 
 ### Tests
 There are 2 types of tests here:
@@ -41,9 +42,8 @@ curl -H 'Content-Type: application/json' -d '{"userId":10}' http://localhost:808
 ```
 
 ### TODO
-* Add logging with AOP
 * Add spring boot actuator with health info (would be used by CI/CD pipeline)
-* Add order table where to store actual user orders
 * Add simple authenticate for admin/user controllers with spring security
 * Add cucumber integration tests
+* Add order table where to store actual user orders
 * Add CI/CD pipeline with deployment to aws
