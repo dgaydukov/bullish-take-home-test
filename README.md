@@ -42,7 +42,8 @@ curl -H 'Content-Type: application/json' -d '{"userId":10}' http://localhost:808
 
 ### TODO
 * Add logging with AOP
+* Add spring boot actuator with health info (would be used by CI/CD pipeline)
 * Add order table where to store actual user orders
 * Add simple authenticate for admin/user controllers with spring security
 * Add cucumber integration tests
-* Add ci/cd pipeline with deployment to aw``s
+* Add CI/CD pipeline with deployment to aws

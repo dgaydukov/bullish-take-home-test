@@ -11,11 +11,13 @@ import bullish.electronic.store.repository.ProductPriceRepository;
 import bullish.electronic.store.repository.ProductRepository;
 import bullish.electronic.store.repository.UserCartRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Log4j2
 public class UserCartService {
     private final UserCartRepository userCartRepository;
     private final ProductPriceRepository productPriceRepository;
@@ -65,6 +67,7 @@ public class UserCartService {
         List<Deal> deals = dealService.getAllDeals();
         // apply all deals for all items in the cart
         deals.forEach(deal -> {
+            log.info("Applying deal={} for userId={}", deal.getDealClassName(), userId);
             dealService.applyDeal(deal, items);
         });
         for(CartItem item: items) {

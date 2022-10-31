@@ -1,6 +1,8 @@
 package bullish.electronic.store.aop;
 
 import bullish.electronic.store.exception.RequestValidationException;
+import bullish.electronic.store.model.ResponseError;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +12,13 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
+@Log4j2
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RequestValidationException.class)
     protected ResponseEntity<Object> handleConflict(
             RequestValidationException ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getLocalizedMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        log.error(ex.getLocalizedMessage(), ex);
+        return handleExceptionInternal(ex, new ResponseError(ex.getLocalizedMessage()), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }
