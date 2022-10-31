@@ -2,29 +2,31 @@ package bullish.electronic.store.service;
 
 import bullish.electronic.store.model.entity.CartItem;
 import bullish.electronic.store.model.entity.Deal;
+import bullish.electronic.store.repository.DealRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.util.Assert;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(MockitoExtension.class)
 class DealServiceTest {
-    @Autowired
+    @Mock
+    private DealRepository dealRepository;
+    @InjectMocks
     private DealService dealService;
 
     @Test
-    @Order(2)
     public void saveAndGetDealTest(){
         Deal newDeal = getNewDeal();
+        Mockito.when(dealRepository.save(newDeal)).thenReturn(getMockDeal());
+        Mockito.when(dealRepository.findById(getMockDeal().getId())).thenReturn(Optional.of(getMockDeal()));
 
         Deal savedDeal = dealService.saveDeal(newDeal);
         Assert.isTrue(savedDeal.getId() > 0, "dealId must be greater then 0");
@@ -43,30 +45,32 @@ class DealServiceTest {
     }
 
     @Test
-    @Order(1)
     public void getAllAndDeleteDealTest(){
-        System.out.println(dealService.getAllDeals());
         Assert.isTrue(dealService.getAllDeals().size() == 0, "No deals should be there");
+        Deal mockDeal = getNewDeal();
+        mockDeal.setId(1);
+        Mockito.when(dealRepository.save(Mockito.any())).thenReturn(mockDeal);
 
         Deal savedDeal1 = dealService.saveDeal(getNewDeal());
         Deal savedDeal2 = dealService.saveDeal(getNewDeal());
 
+        Mockito.when(dealRepository.findAll()).thenReturn(new ArrayList<>(List.of(savedDeal1, savedDeal2)));
         Assert.isTrue(dealService.getAllDeals().size() == 2, "2 deals should be there");
 
+        Mockito.when(dealRepository.findAll()).thenReturn(new ArrayList<>(List.of(savedDeal1)));
         dealService.deleteDeal(savedDeal1.getId());
         Assert.isTrue(dealService.getAllDeals().size() == 1, "1 deal should be there");
     }
 
     @Test
-    @Order(3)
     public void applyDealTest(){
+        Mockito.when(dealRepository.save(Mockito.any())).thenReturn(getMockDeal());
         Deal deal = dealService.saveDeal(getNewDeal());
         List<CartItem> items = new ArrayList<>();
         dealService.applyDeal(deal, items);
     }
 
     @Test
-    @Order(4)
     public void applyWrongDealTest(){
         Deal deal = getNewDeal();
         deal.setDealClassName("badDeal");
@@ -80,6 +84,11 @@ class DealServiceTest {
         Deal deal = new Deal();
         deal.setName("Get 50% off for second item");
         deal.setDealClassName("Get50PercentOffForSecondItem");
+        return deal;
+    }
+    public static Deal getMockDeal(){
+        Deal deal = getNewDeal();
+        deal.setId(1);
         return deal;
     }
 }

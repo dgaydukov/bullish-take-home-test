@@ -6,11 +6,12 @@
 
 ### Features
 * universal exception handling with spring aspects
+* unique exception for each exception cases (help quickly identify the issue without going deep into exception message)
 
 ### Tests
 There are 2 types of tests here:
-* unit tests - where we test code of each class separately, using mocks if our class depends upon other classes
-* integration tests - were we basically launch whole application, load spring context and test it as it is fully running
+* unit tests - where we test code of each class separately, using mocks if our class depends upon other classes (you mostly use mocks here to imitate dependency access).
+* integration tests - were we basically launch whole application, load spring context and test it as it is fully running (no mocks here only real objects, cause in background whole app is running).
 There are 3 main components in this app:
 * controllers - tested as part of integration tests
 * services - tested with unit test for each service method
@@ -44,4 +45,4 @@ curl -H 'Content-Type: application/json' -d '{"userId":10}' http://localhost:808
 * Add order table where to store actual user orders
 * Add simple authenticate for admin/user controllers with spring security
 * Add cucumber integration tests
-* Add ci/cd pipeline with deployment to aws
+* Add ci/cd pipeline with deployment to aw``s

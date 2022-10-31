@@ -9,27 +9,30 @@ import bullish.electronic.store.repository.ProductRepository;
 import bullish.electronic.store.repository.UserCartRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.util.Assert;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SpringBootTest
-class UserCartServiceTest {
-    @Autowired
-    private UserCartService userCartService;
-    @MockBean
-    private ProductRepository productRepository;
-    @MockBean
-    private ProductPriceRepository productPriceRepository;
-    @MockBean
-    private UserCartRepository userCartRepository;
 
+@ExtendWith(MockitoExtension.class)
+class UserCartServiceTest {
+    @Mock
+    private UserCartRepository userCartRepository;
+    @Mock
+    private ProductPriceRepository productPriceRepository;
+    @Mock
+    private ProductRepository productRepository;
+    @Mock
+    private DealService dealService;
+
+    @InjectMocks
+    private UserCartService userCartService;
 
     private static final int USER_ID = 10;
 
