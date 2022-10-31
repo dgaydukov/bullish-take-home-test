@@ -1,16 +1,24 @@
 package bullish.electronic.store;
 
 import bullish.electronic.store.model.entity.Product;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
+import org.springframework.boot.test.system.OutputCaptureRule;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.util.Assert;
 
 /**
  * Here we start whole spring app with fully loaded context using SpringBootTest annotation
@@ -19,6 +27,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(OutputCaptureExtension.class)
 class IntegrationTest {
     @Autowired
     private MockMvc mvc;
@@ -94,5 +103,19 @@ class IntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(10))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalPrice").value(600));
+    }
+
+    @Test
+    public void aspectExecutionTimeLoggingTest(CapturedOutput output) throws Exception {
+        mvc.perform(MockMvcRequestBuilders.post("/admin/product")
+                .content("{\"name\":\"spoon\",\"weight\":100,\"quantity\":10}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("spoon"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.weight").value(100))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.quantity").value(10))
+                .andReturn();
+        Assert.isTrue(output.getAll().contains("Execution time of ProductController.createProduct"), "Missing execution time aspect logging");
     }
 }
