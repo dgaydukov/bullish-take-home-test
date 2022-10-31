@@ -2,7 +2,7 @@ package bullish.electronic.store.controller.admin;
 
 import bullish.electronic.store.model.entity.Deal;
 import bullish.electronic.store.service.DealService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,9 +15,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin")
+@RequiredArgsConstructor
 public class DealController {
-    @Autowired
-    private DealService dealService;
+    private final DealService dealService;
 
     @PostMapping("deal")
     public Deal createDeal(@RequestBody Deal deal){

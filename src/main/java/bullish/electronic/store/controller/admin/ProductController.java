@@ -3,7 +3,7 @@ package bullish.electronic.store.controller.admin;
 import bullish.electronic.store.model.entity.Product;
 import bullish.electronic.store.model.entity.ProductPrice;
 import bullish.electronic.store.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +16,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin")
+@RequiredArgsConstructor
 public class ProductController {
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @PostMapping("product")
     public Product createProduct(@RequestBody Product product){

@@ -4,16 +4,16 @@ import bullish.electronic.store.model.deals.ProductDeal;
 import bullish.electronic.store.model.entity.Deal;
 import bullish.electronic.store.model.entity.CartItem;
 import bullish.electronic.store.repository.DealRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class DealService {
-    @Autowired
-    private DealRepository dealRepository;
+    private final DealRepository dealRepository;
 
     public Deal saveDeal(Deal deal){
         Deal savedDeal = dealRepository.save(deal);

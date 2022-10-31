@@ -3,7 +3,7 @@ package bullish.electronic.store.controller.user;
 import bullish.electronic.store.model.Receipt;
 import bullish.electronic.store.model.entity.CartItem;
 import bullish.electronic.store.service.UserCartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("user/cart")
+@RequiredArgsConstructor
 public class CartController {
-    @Autowired
-    private UserCartService userCartService;
+    private final UserCartService userCartService;
 
     @PostMapping("product")
     public CartItem addProduct(@RequestBody CartItem cartItem){

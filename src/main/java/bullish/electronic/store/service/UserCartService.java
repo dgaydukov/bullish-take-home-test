@@ -10,20 +10,17 @@ import bullish.electronic.store.model.entity.CartItem;
 import bullish.electronic.store.repository.ProductPriceRepository;
 import bullish.electronic.store.repository.ProductRepository;
 import bullish.electronic.store.repository.UserCartRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserCartService {
-    @Autowired
-    private UserCartRepository userCartRepository;
-    @Autowired
-    private ProductPriceRepository productPriceRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private DealService dealService;
+    private final UserCartRepository userCartRepository;
+    private final ProductPriceRepository productPriceRepository;
+    private final ProductRepository productRepository;
+    private final DealService dealService;
 
     public CartItem addProduct(int userId, int productId, int quantity){
         Product product = productRepository.findById(productId)
