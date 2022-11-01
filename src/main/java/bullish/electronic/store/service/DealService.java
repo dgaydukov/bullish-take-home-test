@@ -6,7 +6,6 @@ import bullish.electronic.store.model.entity.CartItem;
 import bullish.electronic.store.repository.DealRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -3,7 +3,6 @@ package bullish.electronic.store.model.deals;
 import bullish.electronic.store.model.entity.CartItem;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
-
 import java.util.ArrayList;
 import java.util.List;
 

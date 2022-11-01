@@ -1,6 +1,6 @@
 package bullish.electronic.store.aop;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,7 +10,7 @@ import org.springframework.util.StopWatch;
 
 @Component
 @Aspect
-@Log4j2
+@Slf4j
 /**
  * Add aspect around all controller methods, to log method execution time
  * later you can search and notify ops team, if any methods runs more then 100ms
